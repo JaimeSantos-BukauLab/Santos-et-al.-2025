@@ -5,9 +5,9 @@ import csv
 
 #Load SeRP Confidence interval files for the two replicates
 with open("/path/to/2_loCI_calc/CI_rep1", "rb") as handle:
-	BTF3_1 = pickle.load(handle)
+	rep1 = pickle.load(handle)
 with open("/path/to/2_loCI_calc/CI_rep2", "rb") as handle:
-	BTF3_2 = pickle.load(handle)
+	rep2 = pickle.load(handle)
 
 #Additional dictionaries
 with open("/path/to/Sequence_human_proteins.pick", "rb") as handle:
@@ -43,7 +43,7 @@ for g in included_genes:
 #Filter by location (i.e: Cytoplasmatic and Nuclear)
                         if loc[g] != 'CP' and loc[g] != 'NC':
                                 continue
-                        t = np.mean([BTF3_1[g][3][:, 3], BTF3_2[g][3][:, 3]], axis=0)
+                        t = np.mean([rep1[g][3][:, 3], rep2[g][3][:, 3]], axis=0)
                         x = np.where(t >= 0.6)[0]
                         if len(x) != 0:
                                 consecutive_ranges = find_consecutive_ranges(x)
