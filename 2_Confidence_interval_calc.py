@@ -9,15 +9,16 @@ window45 = 45
 
 ####iterate over files#####
 path = '/path/to/h5files/out_pickle/'
-input_files = [['Selectome_rep1', 'TotalTranslatome_rep1'], ['Selectome_rep2', 'TotalTranslatome_rep2']]
+#each entry is [total translatome, selectome(IP)] - the order is used below, do not reorder
+input_files = [['TotalTranslatome_rep1', 'Selectome_rep1'], ['TotalTranslatome_rep2', 'Selectome_rep2']]
 output_file_names = ['CI_rep1', 'CI_rep2']
 
 for experiment, out_name in zip(input_files, output_file_names):
 	master = {}
 	with open(path + str(experiment[0]) + '.h5_raw_codon_P15.pick', 'rb') as f:
-		total = pickle.load(f)
+		total = pickle.load(f)	#total translatome
 	with open(path + str(experiment[1]) + '.h5_raw_codon_P15.pick', 'rb') as f:
-		ip = pickle.load(f)
+		ip = pickle.load(f)	#selectome (IP)
 	#count all reads
 	outfile_CI, outfile_score = {}, {}
 	sum_total = np.sum([np.sum(x) for x in total.values()])
